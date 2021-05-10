@@ -1,12 +1,16 @@
-import FavoriteCharacterRepository from '@modules/favoriteCharacters/infra/typeorm/repositories/FavoriteCharacterRepository';
-import IFavoriteCharacterRepository from '@modules/favoriteCharacters/repositories/IFavoriteCharacterRepository';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
-import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
-import '@modules/users/providers';
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
-import '@shared/container/providers';
 import { container } from 'tsyringe';
+
+import '@modules/users/providers';
+import '@shared/container/providers';
+
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+
+import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
+import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
+
+import ITypeRepository from '@modules/types/repositories/ITypeRepository';
+import TypeRepository from '@modules/types/infra/typeorm/repositories/TypeRepository';
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -18,7 +22,4 @@ container.registerSingleton<IUserTokensRepository>(
   UserTokensRepository,
 );
 
-container.registerSingleton<IFavoriteCharacterRepository>(
-  'FavoriteCharacterRepository',
-  FavoriteCharacterRepository,
-);
+container.registerSingleton<ITypeRepository>('TypeRepository', TypeRepository);
