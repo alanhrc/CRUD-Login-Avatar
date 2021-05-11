@@ -7,15 +7,17 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
+  userLoggedId: string;
   user_id: string;
   name: string;
   email: string;
-  old_password?: string;
+  type: string;
+  status: string;
   password?: string;
 }
 
 @injectable()
-class UpdateProfileService {
+class UpdateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -25,16 +27,28 @@ class UpdateProfileService {
   ) {}
 
   public async execute({
+    userLoggedId,
     user_id,
     name,
     email,
-    old_password,
+    type,
+    status,
     password,
   }: IRequest): Promise<User> {
+    const userAdmin = await this.usersRepository.findById(userLoggedId);
+
+    if (!userAdmin) {
+      throw new AppError('Operation is not allowed', 401);
+    }
+
+    if (userAdmin.type !== 'root' && userAdmin.type !== 'admin') {
+      throw new AppError('Operation is not allowed', 401);
+    }
+
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('User not found.', 404);
+      throw new AppError('User not found.');
     }
 
     const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
@@ -45,27 +59,10 @@ class UpdateProfileService {
 
     user.name = String(name).trim();
     user.email = String(email).toLowerCase().trim();
+    user.type = String(type).toLowerCase().trim();
+    user.status = String(status).toLowerCase().trim();
 
-    if (password && !old_password) {
-      throw new AppError(
-        'You need to inform the old password to set a new password.',
-        401,
-      );
-    }
-
-    if (password && old_password) {
-      const checkUserOldPassword = await this.hashProvider.compareHash(
-        old_password,
-        user.password,
-      );
-
-      if (!checkUserOldPassword) {
-        throw new AppError(
-          'You need to inform the old password correct to set a new password.',
-          401,
-        );
-      }
-
+    if (password) {
       user.password = await this.hashProvider.generateHash(
         String(password).trim(),
       );
@@ -75,4 +72,4 @@ class UpdateProfileService {
   }
 }
 
-export default UpdateProfileService;
+export default UpdateUserService;

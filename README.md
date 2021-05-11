@@ -54,6 +54,35 @@
 	"status": "active"
 }
 ```
+
+- List All Users - GET api/users
+```json
+[
+  {
+    "id": "0971e9b5-5051-46b2-b745-8d21402aa739",
+      "name": "Alan Henrique",
+      "email": "alancamargo50@gmail.com",
+      "type": "root",
+      "status": "active",
+      "created_at": "2021-05-11T06:01:01.946Z",
+      "updated_at": "2021-05-11T06:01:01.946Z",
+      "avatar_url": null
+  }
+]
+```
+
+- Update User - PUT api/users/:id
+```json
+{
+	"name": "Alan Henrique",
+	"email": "alan@alan.com",
+	"type": "root",
+	"status": "active",
+	"password": "123456", // Optional
+	"password_confirmation": "123456" // Required if filled in "password"
+}
+```
+
 - Delete User - DELETE api/users/:id
 
 - Create Type - POST api/types/
@@ -78,6 +107,17 @@
   "created_at": "2021-05-09T08:09:10.614Z",
   "updated_at": "2021-05-09T08:09:10.614Z",
   "avatar_url": null
+}
+```
+
+- Update Profile - PUT api/profile
+```json
+{
+	"name": "Alan Henrique",
+	"email": "alan@alan.com",
+	"old_password": "123456", // Optional
+	"password": "123456", // Required if filled in "old_password"
+	"password_confirmation": "123456" // Required if filled in "old_password"
 }
 ```
 
@@ -113,7 +153,7 @@ Para este teste, você vai criar uma API REST que possibilite um cadastro de usu
 - [X] A tabela de tipos deve a descrição do tipo.
 - [X] Um usuário tem apenas um único tipo
 - [X] Apenas usuários do tipo root e admin podem cadastrar novos usuários.
-- Apenas usuários do tipo root admin podem alterar qualquer informação do usuário(inclusive status);
+- [X] Apenas usuários do tipo root admin podem alterar qualquer informação do usuário(inclusive status);
 - [X] Apenas usuários root podem excluir usuários
 - [X] Usuários do tipo geral só tem acesso a listar informações de seu próprio usuário, bem como alterar suas próprias informações.
 - [X] O login deve ser feito com email e senha.
