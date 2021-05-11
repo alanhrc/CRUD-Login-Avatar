@@ -60,6 +60,48 @@ describe('DeleteUser', () => {
     ).rejects.toBeInstanceOf(AppError);
   });
 
+  it('should not be able to delete a not existent user admin', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'Alan Henrique',
+      email: 'alan2@alan.com',
+      password: '123123',
+      type: 'global',
+      status: 'active',
+    });
+
+    await expect(
+      deleteUserService.execute({
+        userLoggedId: 'inexistentId',
+        id: user.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('should not be able to delete a not authorized user', async () => {
+    const userAdmin = await fakeUsersRepository.create({
+      name: 'Alan Henrique',
+      email: 'alan@alan.com',
+      password: '123123',
+      type: 'global',
+      status: 'active',
+    });
+
+    const user = await fakeUsersRepository.create({
+      name: 'Alan Henrique',
+      email: 'alan2@alan.com',
+      password: '123123',
+      type: 'global',
+      status: 'active',
+    });
+
+    await expect(
+      deleteUserService.execute({
+        userLoggedId: userAdmin.id,
+        id: user.id,
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
+
   it('should be able to delete a avatar user if exists', async () => {
     const userAdmin = await fakeUsersRepository.create({
       name: 'Alan Henrique',

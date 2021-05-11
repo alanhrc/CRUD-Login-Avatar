@@ -7,7 +7,7 @@ import IHashProvider from '@modules/users/providers/HashProvider/models/IHashPro
 import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
-  userLoggedId: string;
+  userLoggedId?: string;
   name: string;
   email: string;
   password: string;
@@ -33,14 +33,16 @@ class CreateUserService {
     type,
     status,
   }: IRequest): Promise<User> {
-    const userAdmin = await this.usersRepository.findById(userLoggedId);
+    if (userLoggedId) {
+      const userAdmin = await this.usersRepository.findById(userLoggedId);
 
-    if (!userAdmin) {
-      throw new AppError('Operation is not allowed', 401);
-    }
+      if (!userAdmin) {
+        throw new AppError('Operation is not allowed', 401);
+      }
 
-    if (userAdmin.type !== 'root' && userAdmin.type !== 'admin') {
-      throw new AppError('Operation is not allowed', 401);
+      if (userAdmin.type !== 'root' && userAdmin.type !== 'admin') {
+        throw new AppError('Operation is not allowed', 401);
+      }
     }
 
     const checkUserExists = await this.usersRepository.findByEmail(email);

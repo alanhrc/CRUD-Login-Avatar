@@ -23,7 +23,9 @@ describe('UpdateProfile', () => {
     const user = await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     const updatedUser = await updateProfileService.execute({
@@ -40,7 +42,9 @@ describe('UpdateProfile', () => {
     await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     await expect(
@@ -56,13 +60,17 @@ describe('UpdateProfile', () => {
     await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     const user = await fakeUsersRepository.create({
-      name: 'Alan Henrique2',
-      email: 'alan2@alan.com',
-      password: '123456',
+      name: 'Alan Henrique',
+      email: 'alan@alan.com',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     await expect(
@@ -79,6 +87,8 @@ describe('UpdateProfile', () => {
       name: 'Alan Henrique',
       email: 'alan@alan.com',
       password: '123456',
+      type: 'root',
+      status: 'active',
     });
 
     const updatedUser = await updateProfileService.execute({
@@ -96,7 +106,9 @@ describe('UpdateProfile', () => {
     const user = await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     await expect(
@@ -113,7 +125,9 @@ describe('UpdateProfile', () => {
     const user = await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     await expect(
@@ -121,7 +135,7 @@ describe('UpdateProfile', () => {
         user_id: user.id,
         name: 'Alan Henrique2',
         email: 'alan2@alan.com',
-        old_password: '123123',
+        old_password: '12312345',
         password: '123123',
       }),
     ).rejects.toBeInstanceOf(AppError);

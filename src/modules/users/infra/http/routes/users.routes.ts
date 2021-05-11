@@ -8,10 +8,24 @@ import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAut
 const usersRouter = Router();
 const usersController = new UsersController();
 
-usersRouter.use(ensureAuthenticated);
+usersRouter.post(
+  '/secret',
+  celebrate({
+    [Segments.BODY]: {
+      secret: Joi.string(),
+      name: Joi.string().required(),
+      email: Joi.string().required().email(),
+      password: Joi.string().required(),
+      type: Joi.string().required(),
+      status: Joi.string().required(),
+    },
+  }),
+  usersController.create,
+);
 
 usersRouter.post(
   '/',
+  ensureAuthenticated,
   celebrate({
     [Segments.BODY]: {
       name: Joi.string().required(),
@@ -24,8 +38,8 @@ usersRouter.post(
   usersController.create,
 );
 
-usersRouter.get('/', usersController.index);
+usersRouter.get('/', ensureAuthenticated, usersController.index);
 
-usersRouter.delete('/:id', usersController.destroy);
+usersRouter.delete('/:id', ensureAuthenticated, usersController.destroy);
 
 export default usersRouter;

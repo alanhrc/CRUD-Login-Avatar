@@ -16,12 +16,16 @@ describe('ListUsers', () => {
       name: 'Alan Henrique',
       email: 'alan@alan.com',
       password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     const user2 = await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan2@alan.com',
       password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     const users = await listUserService.execute();

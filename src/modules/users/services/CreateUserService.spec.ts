@@ -76,7 +76,7 @@ describe('CreateUser', () => {
       name: 'Alan Henrique',
       email: 'alan@alan.com',
       password: '123123',
-      type: 'global',
+      type: 'root',
       status: 'active',
     });
 
@@ -86,7 +86,7 @@ describe('CreateUser', () => {
         name: 'Alan Henrique',
         email: userAdmin.email,
         password: '123123',
-        type: 'root',
+        type: 'global',
         status: 'active',
       }),
     ).rejects.toBeInstanceOf(AppError);

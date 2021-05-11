@@ -17,7 +17,9 @@ describe('ShowProfile', () => {
     const user = await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     const profile = await showProfileService.execute({
@@ -32,7 +34,9 @@ describe('ShowProfile', () => {
     await fakeUsersRepository.create({
       name: 'Alan Henrique',
       email: 'alan@alan.com',
-      password: '123456',
+      password: '123123',
+      type: 'root',
+      status: 'active',
     });
 
     await expect(

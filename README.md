@@ -10,11 +10,15 @@
 - Eslint
 
 ```json
-  Open the project and whrite
+  Open the project and write
 
   yarn
 
   Clone file .env.example to .env and fill it
+
+  yarn typeorm migration:run
+
+  yarn dev
 ```
 
 <br />
@@ -51,6 +55,14 @@
 }
 ```
 - Delete User - DELETE api/users/:id
+
+- Create Type - POST api/types/
+```json
+{
+	"type": "root",
+	"description": "Admin master"
+}
+```
 
 <br />
 
@@ -98,19 +110,19 @@ Para este teste, você vai criar uma API REST que possibilite um cadastro de usu
 
 ### Regras de negócio
 - [X] A tabela de usuários deve conter os campos nome, senha, tipo, email e status.
-- A tabela de tipos deve a descrição do tipo.
+- [X] A tabela de tipos deve a descrição do tipo.
 - [X] Um usuário tem apenas um único tipo
 - [X] Apenas usuários do tipo root e admin podem cadastrar novos usuários.
 - Apenas usuários do tipo root admin podem alterar qualquer informação do usuário(inclusive status);
 - [X] Apenas usuários root podem excluir usuários
-- Usuários do tipo geral só tem acesso a listar informações de seu próprio usuário, bem como alterar suas próprias informações.
+- [X] Usuários do tipo geral só tem acesso a listar informações de seu próprio usuário, bem como alterar suas próprias informações.
 - [X] O login deve ser feito com email e senha.
 
 
 
 ## Requisitos
 - O projeto deve ser documentado, principalmente a arquitetura utilizada e as rotas para cada tarefa.
-- O projeto deve ser construído com Typescript
+- [X] O projeto deve ser construído com Typescript
 - O projeto deve ter uma cobertura considerável de testes unitários
 
 ### 🚫 O que não pode? (por favor 🙏😂)
