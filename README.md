@@ -93,6 +93,28 @@
 }
 ```
 
+- List All Types - GET api/types
+```json
+[
+  {
+    "id": "1aca8116-34e3-46a7-83e2-ceb8c7225548",
+    "type": "admin",
+    "description": "Second Admin master but not root",
+    "created_at": "2021-05-12T19:07:33.186Z",
+    "updated_at": "2021-05-12T19:07:33.186Z"
+  },
+  {
+    "id": "a28790bd-9aec-4f8f-9e9e-01a24378770b",
+    "type": "root",
+    "description": "Admin master",
+    "created_at": "2021-05-11T06:15:51.678Z",
+    "updated_at": "2021-05-11T06:15:51.678Z"
+  }
+]
+```
+
+- Delete Type - DELETE api/types/:typeId
+
 <br />
 
 ## General
