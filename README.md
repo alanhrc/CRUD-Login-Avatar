@@ -139,12 +139,12 @@ Para este teste, você vai criar uma API REST que possibilite um cadastro de usu
 **Usuários**
 - [X] Cadastrar um novo usuário
 - [X] Listar informações de um usuário
-- Alterar o nome e tipo de um usuário
+- [X] Alterar o nome e tipo de um usuário
 - [X] Excluir um usuário
-- Alterar o status de um usuário(ativo e inativo)
+- [X] Alterar o status de um usuário(ativo e inativo)
 
 **Tipos**
-- Listar todos os tipos cadastrados
+- [X] Listar todos os tipos cadastrados
 
 
 
@@ -163,7 +163,9 @@ Para este teste, você vai criar uma API REST que possibilite um cadastro de usu
 ## Requisitos
 - O projeto deve ser documentado, principalmente a arquitetura utilizada e as rotas para cada tarefa.
 - [X] O projeto deve ser construído com Typescript
-- O projeto deve ter uma cobertura considerável de testes unitários
+- [X] O projeto deve ter uma cobertura considerável de testes unitários
+
+![Print App](./assets/tests.png)
 
 ### 🚫 O que não pode? (por favor 🙏😂)
 
@@ -173,4 +175,4 @@ Para este teste, você vai criar uma API REST que possibilite um cadastro de usu
 - [X] deixar erros do eslint
 - códigos comentados
 - console logs
-- fazer apenas 1 commit com todo código
+- [X] fazer apenas 1 commit com todo código

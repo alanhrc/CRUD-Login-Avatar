@@ -1,6 +1,6 @@
-import { celebrate, Segments, Joi } from 'celebrate';
 import TypeController from '@modules/types/infra/http/controllers/TypeController';
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
+import { celebrate, Segments, Joi } from 'celebrate';
 import { Router } from 'express';
 
 const typeRouter = Router();
@@ -19,8 +19,8 @@ typeRouter.post(
   typeController.create,
 );
 
-// typeRouter.get('/', typeController.index);
+typeRouter.get('/', typeController.index);
 
-// typeRouter.delete('/:id', typeController.destroy);
+typeRouter.delete('/:typeId', typeController.destroy);
 
 export default typeRouter;

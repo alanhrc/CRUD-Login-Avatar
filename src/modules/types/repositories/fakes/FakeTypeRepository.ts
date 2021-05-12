@@ -1,8 +1,7 @@
-import { uuid } from 'uuidv4';
-
 import ICreateTypeDTO from '@modules/types/dtos/ICreateTypeDTO';
 import Type from '@modules/types/infra/typeorm/entities/Type';
 import ITypeRepository from '@modules/types/repositories/ITypeRepository';
+import { uuid } from 'uuidv4';
 
 class FakeTypeRepository implements ITypeRepository {
   private types: Type[] = [];
@@ -19,6 +18,12 @@ class FakeTypeRepository implements ITypeRepository {
 
   public async index(): Promise<Type[]> {
     return this.types;
+  }
+
+  public async findById(typeId: string): Promise<Type | undefined> {
+    const typeFound = this.types.find(typeF => typeF.id === typeId);
+
+    return typeFound;
   }
 
   public async findByType(type: string): Promise<Type | undefined> {
@@ -41,9 +46,9 @@ class FakeTypeRepository implements ITypeRepository {
     return newType;
   }
 
-  public async destroy(type: string): Promise<void> {
+  public async destroy(typeId: string): Promise<void> {
     const findIndex = this.types.findIndex(
-      typeFound => typeFound.type === type,
+      typeFound => typeFound.id === typeId,
     );
 
     this.types.splice(findIndex, 1);

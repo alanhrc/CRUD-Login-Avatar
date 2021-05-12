@@ -1,4 +1,3 @@
-import Type from '@modules/types/infra/typeorm/entities/Type';
 import ITypeRepository from '@modules/types/repositories/ITypeRepository';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import { inject, injectable } from 'tsyringe';
@@ -7,12 +6,11 @@ import AppError from '@shared/errors/AppError';
 
 interface IRequest {
   user_id: string;
-  type: string;
-  description: string;
+  typeId: string;
 }
 
 @injectable()
-class CreateTypeService {
+class DeleteFavoriteCharacterService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -21,11 +19,7 @@ class CreateTypeService {
     private typeRepository: ITypeRepository,
   ) {}
 
-  public async execute({
-    user_id,
-    type,
-    description,
-  }: IRequest): Promise<Type> {
+  public async execute({ user_id, typeId }: IRequest): Promise<void> {
     const userAdmin = await this.usersRepository.findById(user_id);
 
     if (!userAdmin) {
@@ -36,19 +30,14 @@ class CreateTypeService {
       throw new AppError('Operation is not allowed', 401);
     }
 
-    const existentType = await this.typeRepository.findByType(type);
+    const typeFound = await this.typeRepository.findById(typeId);
 
-    if (existentType) {
-      throw new AppError('Type already exists.', 409);
+    if (!typeFound) {
+      throw new AppError('Type found', 404);
     }
 
-    const newType = await this.typeRepository.create({
-      type,
-      description,
-    });
-
-    return newType;
+    await this.typeRepository.destroy(typeId);
   }
 }
 
-export default CreateTypeService;
+export default DeleteFavoriteCharacterService;

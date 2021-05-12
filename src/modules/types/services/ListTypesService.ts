@@ -7,12 +7,10 @@ import AppError from '@shared/errors/AppError';
 
 interface IRequest {
   user_id: string;
-  type: string;
-  description: string;
 }
 
 @injectable()
-class CreateTypeService {
+class ListTypesService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -21,11 +19,7 @@ class CreateTypeService {
     private typeRepository: ITypeRepository,
   ) {}
 
-  public async execute({
-    user_id,
-    type,
-    description,
-  }: IRequest): Promise<Type> {
+  public async execute({ user_id }: IRequest): Promise<Type[]> {
     const userAdmin = await this.usersRepository.findById(user_id);
 
     if (!userAdmin) {
@@ -36,19 +30,10 @@ class CreateTypeService {
       throw new AppError('Operation is not allowed', 401);
     }
 
-    const existentType = await this.typeRepository.findByType(type);
+    const types = await this.typeRepository.index();
 
-    if (existentType) {
-      throw new AppError('Type already exists.', 409);
-    }
-
-    const newType = await this.typeRepository.create({
-      type,
-      description,
-    });
-
-    return newType;
+    return types;
   }
 }
 
-export default CreateTypeService;
+export default ListTypesService;

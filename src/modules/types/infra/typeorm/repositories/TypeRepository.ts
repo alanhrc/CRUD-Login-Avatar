@@ -1,8 +1,7 @@
-import { getRepository, Repository } from 'typeorm';
-
 import ICreateTypeDTO from '@modules/types/dtos/ICreateTypeDTO';
 import Type from '@modules/types/infra/typeorm/entities/Type';
 import ITypeRepository from '@modules/types/repositories/ITypeRepository';
+import { getRepository, Repository } from 'typeorm';
 
 class TypeRepository implements ITypeRepository {
   private ormRepository: Repository<Type>;
@@ -33,6 +32,14 @@ class TypeRepository implements ITypeRepository {
     return types;
   }
 
+  public async findById(typeId: string): Promise<Type | undefined> {
+    const favoriteCharacter = await this.ormRepository.findOne({
+      where: { id: typeId },
+    });
+
+    return favoriteCharacter;
+  }
+
   public async findByType(type: string): Promise<Type | undefined> {
     const favoriteCharacter = await this.ormRepository.findOne({
       where: { type },
@@ -41,9 +48,9 @@ class TypeRepository implements ITypeRepository {
     return favoriteCharacter;
   }
 
-  public async destroy(type: string): Promise<void> {
+  public async destroy(typeId: string): Promise<void> {
     const typeFound = await this.ormRepository.findOne({
-      where: { type },
+      where: { id: typeId },
     });
 
     if (typeFound) {
